@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Create account — TradeJournal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div class="bg-ambient"></div>
+<div class="bg-grid"></div>
+
+<div class="auth-shell">
+  <div class="auth-trace">
+    <svg viewBox="0 0 920 260" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="trace-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f2c230" stop-opacity="0.16" />
+          <stop offset="100%" stop-color="#f2c230" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path class="fill" d="M0,200 L40,205 L80,180 L120,195 L160,160 L200,175 L240,140 L280,155 L320,115 L360,130 L400,95 L440,110 L480,75 L520,90 L560,55 L600,70 L640,40 L680,55 L720,25 L760,40 L800,15 L840,30 L880,10 L920,20 L920,260 L0,260 Z" />
+      <path d="M0,200 L40,205 L80,180 L120,195 L160,160 L200,175 L240,140 L280,155 L320,115 L360,130 L400,95 L440,110 L480,75 L520,90 L560,55 L600,70 L640,40 L680,55 L720,25 L760,40 L800,15 L840,30 L880,10 L920,20" />
+    </svg>
+  </div>
+
+  <div class="glass-card auth-card">
+    <div class="auth-brand">
+      <div class="auth-brand-mark">TJ</div>
+      <div class="auth-brand-name">TradeJournal</div>
+    </div>
+
+    <h1 class="auth-heading">Create your account</h1>
+    <p class="auth-subheading">Start logging trades and tracking your edge.</p>
+
+    <div class="auth-banner" id="auth-error"></div>
+
+    <form id="signup-form" novalidate>
+      <div class="field">
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" placeholder="Ada Trader" autocomplete="name" required />
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="At least 6 characters" autocomplete="new-password" required />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Create account</button>
+    </form>
+
+    <div class="auth-switch">
+      Already have an account? <a href="login.html" data-nav>Sign in</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  Auth.redirectIfAuthed();
+
+  const form = document.getElementById('signup-form');
+  const errorBox = document.getElementById('auth-error');
+  const submitBtn = document.getElementById('submit-btn');
+
+  function setError(message) {
+    if (!message) {
+      errorBox.classList.remove('show');
+      errorBox.textContent = '';
+      return;
+    }
+    errorBox.textContent = message;
+    errorBox.classList.add('show');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setError('');
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!name || !email || !password) {
+      setError('Fill in every field to continue.');
+      return;
+    }
+    if (password.length < 6) {
+      setError('Password must be at least 6 characters.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Creating account…';
+    try {
+      const { user, token } = await Api.post('/api/auth/signup', { name, email, password });
+      Auth.setSession(token, user);
+      document.body.classList.add('page-out');
+      setTimeout(() => window.location.replace('dashboard.html'), 200);
+    } catch (err) {
+      setError(err.message);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Create account';
+    }
+  });
+</script>
+</body>
+</html>

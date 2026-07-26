@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "id": "726859aa-ca3c-4304-8a32-78f3569abf3b",
+      "name": "Abioye Folashade",
+      "email": "sammypropmail@gmail.com",
+      "salt": "12ce94682f88a60d8156b10f7b73cbcd",
+      "hash": "1295f24f979b40c5398729019c73b6551faa1c8f8c7f07c1b5c3421a7bde6b0c2ba08c39b469c7228a60f7dfb5ebd5a5042d1c5c2fb06bbf6f4bdd9e500787b5",
+      "createdAt": "2026-07-26T21:43:35.564Z"
+    }
+  ],
+  "trades": [
+    {
+      "id": "5db141f7-3487-4de5-ab36-b0583cd79fe1",
+      "userId": "726859aa-ca3c-4304-8a32-78f3569abf3b",
+      "pair": "XAUUSD",
+      "notes": "",
+      "date": "2026-07-26T00:00:00.000Z",
+      "createdAt": "2026-07-26T21:48:44.059Z",
+      "entry": 4031.63,
+      "stopLoss": 4023.37,
+      "takeProfit": 4056.65,
+      "exitPrice": 4056.65,
+      "direction": "long",
+      "riskPerUnit": 8.26,
+      "plannedRR": 3.03,
+      "realizedR": 3.03,
+      "outcome": "win"
+    }
+  ],
+  "tokens": {
+    "2dd1680296c4f6ff94484a05aa248241fcdbb4059c3cb5584b2dc97cba09874e": {
+      "userId": "726859aa-ca3c-4304-8a32-78f3569abf3b",
+      "expiresAt": 1787694215604
+    }
+  }
+}

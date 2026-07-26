@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Sign in — TradeJournal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+<div class="bg-ambient"></div>
+<div class="bg-grid"></div>
+
+<div class="auth-shell">
+  <div class="auth-trace">
+    <svg viewBox="0 0 920 260" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="trace-fade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#f2c230" stop-opacity="0.16" />
+          <stop offset="100%" stop-color="#f2c230" stop-opacity="0" />
+        </linearGradient>
+      </defs>
+      <path class="fill" d="M0,190 L40,175 L80,185 L120,150 L160,160 L200,120 L240,135 L280,95 L320,110 L360,70 L400,90 L440,55 L480,75 L520,40 L560,60 L600,30 L640,50 L680,20 L720,45 L760,15 L800,35 L840,10 L880,25 L920,5 L920,260 L0,260 Z" />
+      <path d="M0,190 L40,175 L80,185 L120,150 L160,160 L200,120 L240,135 L280,95 L320,110 L360,70 L400,90 L440,55 L480,75 L520,40 L560,60 L600,30 L640,50 L680,20 L720,45 L760,15 L800,35 L840,10 L880,25 L920,5" />
+    </svg>
+  </div>
+
+  <div class="glass-card auth-card">
+    <div class="auth-brand">
+      <div class="auth-brand-mark">TJ</div>
+      <div class="auth-brand-name">TradeJournal</div>
+    </div>
+
+    <h1 class="auth-heading">Welcome back</h1>
+    <p class="auth-subheading">Sign in to pick up your journal where you left off.</p>
+
+    <div class="auth-banner" id="auth-error"></div>
+
+    <form id="login-form" novalidate>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required />
+      </div>
+      <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Sign in</button>
+    </form>
+
+    <div class="auth-switch">
+      New here? <a href="signup.html" data-nav>Create an account</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script>
+  Auth.redirectIfAuthed();
+
+  const form = document.getElementById('login-form');
+  const errorBox = document.getElementById('auth-error');
+  const submitBtn = document.getElementById('submit-btn');
+
+  function setError(message) {
+    if (!message) {
+      errorBox.classList.remove('show');
+      errorBox.textContent = '';
+      return;
+    }
+    errorBox.textContent = message;
+    errorBox.classList.add('show');
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    setError('');
+    const email = document.getElementById('email').value.trim();
+    const password = document.getElementById('password').value;
+
+    if (!email || !password) {
+      setError('Enter your email and password.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Signing in…';
+    try {
+      const { user, token } = await Api.post('/api/auth/login', { email, password });
+      Auth.setSession(token, user);
+      document.body.classList.add('page-out');
+      setTimeout(() => window.location.replace('dashboard.html'), 200);
+    } catch (err) {
+      setError(err.message);
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Sign in';
+    }
+  });
+</script>
+</body>
+</html>

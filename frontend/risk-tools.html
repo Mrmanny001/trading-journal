@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Risk Tools — TradeJournal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="risk">
+<div class="bg-ambient"></div>
+<div class="bg-grid"></div>
+
+<div class="app-shell" id="app-shell">
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Risk Tools</div>
+        <h1 class="page-title">Position size calculator</h1>
+        <p class="page-subtitle">Work out exactly how many lots to trade for the risk you want to take.</p>
+      </div>
+    </div>
+
+    <div class="risk-grid">
+      <div class="glass-panel panel">
+        <h3 class="panel-title">Inputs</h3>
+        <p class="panel-subtitle">Every field updates the result instantly.</p>
+
+        <div class="field">
+          <label for="account-balance">Account balance</label>
+          <div class="input-suffix">
+            <input type="number" step="any" id="account-balance" placeholder="10000" value="10000" />
+            <span>USD</span>
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label>Risk mode</label>
+            <div class="toggle-group" id="risk-mode-toggle">
+              <button type="button" class="active long" data-value="percent">% of account</button>
+              <button type="button" class="short" data-value="fixed">Fixed $</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="risk-value" id="risk-value-label">Risk %</label>
+            <input type="number" step="any" id="risk-value" placeholder="1" value="1" />
+          </div>
+        </div>
+
+        <div class="field-row">
+          <div class="field">
+            <label for="stop-pips">Stop loss distance</label>
+            <div class="input-suffix">
+              <input type="number" step="any" id="stop-pips" placeholder="25" value="25" />
+              <span>pips</span>
+            </div>
+          </div>
+          <div class="field">
+            <label for="lot-type">Lot type</label>
+            <select id="lot-type">
+              <option value="100000">Standard (100k)</option>
+              <option value="10000">Mini (10k)</option>
+              <option value="1000">Micro (1k)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="pip-value">Pip value per standard lot</label>
+          <div class="input-suffix">
+            <input type="number" step="any" id="pip-value" placeholder="10" value="10" />
+            <span>USD</span>
+          </div>
+          <p class="risk-note" style="margin-top:2px">Defaults to $10/pip, accurate for most USD-quoted majors (e.g. EUR/USD, GBP/USD) at a standard lot. Adjust for JPY pairs or a different account currency.</p>
+        </div>
+      </div>
+
+      <div class="risk-output">
+        <div class="glass-panel risk-output-card hero">
+          <div class="risk-output-label">Position size</div>
+          <div class="risk-output-value" id="out-lots">0.00 lots</div>
+        </div>
+        <div class="glass-panel risk-output-card">
+          <div class="risk-output-label">Units</div>
+          <div class="risk-output-value" id="out-units">0</div>
+        </div>
+        <div class="glass-panel risk-output-card">
+          <div class="risk-output-label">Amount at risk</div>
+          <div class="risk-output-value" id="out-risk-amount">$0.00</div>
+        </div>
+        <div class="glass-panel risk-output-card">
+          <div class="risk-output-label">Pip value at this size</div>
+          <div class="risk-output-value" id="out-pip-value">$0.00</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass-panel panel" style="margin-top:18px">
+      <h3 class="panel-title">Quick R:R calculator</h3>
+      <p class="panel-subtitle">Sanity-check a setup before it goes in the journal.</p>
+
+      <div class="risk-grid">
+        <div>
+          <div class="field-row">
+            <div class="field">
+              <label for="qrr-entry">Entry</label>
+              <input type="number" step="any" id="qrr-entry" placeholder="1.1000" />
+            </div>
+            <div class="field">
+              <label for="qrr-stop">Stop loss</label>
+              <input type="number" step="any" id="qrr-stop" placeholder="1.0950" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="qrr-target">Take profit</label>
+            <input type="number" step="any" id="qrr-target" placeholder="1.1150" />
+          </div>
+        </div>
+        <div class="risk-output">
+          <div class="glass-panel risk-output-card hero">
+            <div class="risk-output-label">Risk:Reward</div>
+            <div class="risk-output-value" id="qrr-out">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/risk.js"></script>
+</body>
+</html>

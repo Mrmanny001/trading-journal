@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Dashboard — TradeJournal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="dashboard">
+<div class="bg-ambient"></div>
+<div class="bg-grid"></div>
+
+<div class="app-shell" id="app-shell">
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Overview</div>
+        <h1 class="page-title" id="greeting">Welcome back</h1>
+        <p class="page-subtitle">Here's how your trading is tracking.</p>
+      </div>
+      <a href="journal.html" data-nav class="btn btn-primary">+ Log a trade</a>
+    </div>
+
+    <div class="stat-grid" id="stat-grid">
+      <!-- stat cards injected by dashboard.js -->
+    </div>
+
+    <div class="dash-grid">
+      <div class="glass-panel panel">
+        <h3 class="panel-title">Equity curve</h3>
+        <p class="panel-subtitle">Cumulative R across your closed trades</p>
+        <div id="equity-chart-wrap"></div>
+      </div>
+
+      <div class="glass-panel panel">
+        <h3 class="panel-title">Most traded</h3>
+        <p class="panel-subtitle">By number of logged trades</p>
+        <div id="top-pairs"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/dashboard.js"></script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<title>Journal — TradeJournal</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css" />
+</head>
+<body data-page="journal">
+<div class="bg-ambient"></div>
+<div class="bg-grid"></div>
+
+<div class="app-shell" id="app-shell">
+  <main class="main-content">
+    <div class="page-header">
+      <div>
+        <div class="page-eyebrow">Journal</div>
+        <h1 class="page-title">Your trades</h1>
+        <p class="page-subtitle">Every entry, exit, and R multiple in one place.</p>
+      </div>
+      <button class="btn btn-primary" id="add-trade-btn">+ Log a trade</button>
+    </div>
+
+    <div class="journal-toolbar">
+      <div class="filter-chip-group" id="outcome-filters">
+        <button class="filter-chip active" data-filter="all">All</button>
+        <button class="filter-chip" data-filter="open">Open</button>
+        <button class="filter-chip" data-filter="win">Wins</button>
+        <button class="filter-chip" data-filter="loss">Losses</button>
+        <button class="filter-chip" data-filter="breakeven">Breakeven</button>
+      </div>
+      <input type="text" class="search-input" id="search-input" placeholder="Search pair…" />
+    </div>
+
+    <div class="glass-panel panel">
+      <div class="trade-table-wrap" id="table-wrap">
+        <!-- table or empty state injected by journal.js -->
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- Add / edit trade modal -->
+<div class="modal-overlay" id="trade-modal">
+  <div class="glass-card modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Log a trade</h3>
+      <button class="icon-btn" id="modal-close" aria-label="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <form id="trade-form" novalidate>
+      <input type="hidden" id="trade-id" />
+
+      <div class="field-row">
+        <div class="field">
+          <label for="pair">Pair / symbol</label>
+          <input type="text" id="pair" placeholder="EURUSD" required />
+        </div>
+        <div class="field">
+          <label>Direction</label>
+          <div class="toggle-group" id="direction-toggle">
+            <button type="button" class="active long" data-value="long">Long</button>
+            <button type="button" class="short" data-value="short">Short</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="entry">Entry price</label>
+          <input type="number" step="any" id="entry" placeholder="1.1000" required />
+        </div>
+        <div class="field">
+          <label for="stopLoss">Stop loss</label>
+          <input type="number" step="any" id="stopLoss" placeholder="1.0950" required />
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="takeProfit">Take profit <span style="text-transform:none;font-weight:400">(optional)</span></label>
+          <input type="number" step="any" id="takeProfit" placeholder="1.1150" />
+        </div>
+        <div class="field">
+          <label for="exitPrice">Exit price <span style="text-transform:none;font-weight:400">(if closed)</span></label>
+          <input type="number" step="any" id="exitPrice" placeholder="1.1150" />
+        </div>
+      </div>
+
+      <div class="modal-rr-preview">
+        <div class="modal-rr-item">
+          <div class="modal-rr-label">Risk</div>
+          <div class="modal-rr-value mono" id="preview-risk">—</div>
+        </div>
+        <div class="modal-rr-item">
+          <div class="modal-rr-label">Planned R:R</div>
+          <div class="modal-rr-value mono" id="preview-rr">—</div>
+        </div>
+        <div class="modal-rr-item">
+          <div class="modal-rr-label">Realized R</div>
+          <div class="modal-rr-value mono" id="preview-realized">—</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="date">Date</label>
+        <input type="date" id="date" required />
+      </div>
+
+      <div class="field">
+        <label for="notes">Notes <span style="text-transform:none;font-weight:400">(optional)</span></label>
+        <textarea id="notes" placeholder="Setup, mistakes, what you'd repeat…"></textarea>
+      </div>
+
+      <div class="field-error" id="form-error"></div>
+
+      <button type="submit" class="btn btn-primary btn-block" id="save-trade-btn">Save trade</button>
+    </form>
+  </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/journal.js"></script>
+</body>
+</html>
