@@ -25,7 +25,7 @@ function renderNav(activePage) {
   const links = [
     { id: 'dashboard', href: 'dashboard.html', label: 'Dashboard' },
     { id: 'journal', href: 'journal.html', label: 'Journal' },
-    { id: 'risk', href: 'risk-tools.html', label: 'Risk Tools' },
+    { id: 'risk', href: 'risk-tools.html', label: 'Risk Calculator' },
   ];
 
   const navLinks = links
