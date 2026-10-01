@@ -523,7 +523,7 @@ body.page-out {
   flex-direction: column;
   border-right: 1px solid var(--glass-border);
   background: rgba(255, 255, 255, 0.015);
-  position: sticky;
+  position: fixed;
   top: 0;
   height: 80vh;
 }
