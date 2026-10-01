@@ -525,7 +525,7 @@ body.page-out {
   background: rgba(255, 255, 255, 0.015);
   position: sticky;
   top: 0;
-  height: 100vh;
+  height: 80vh;
 }
 
 /* Hidden on desktop by default so it never becomes a stray grid item;
